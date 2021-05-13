@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "189317978219",
+    "project_id": "zoomplus-6ef81",
+    "storage_bucket": "zoomplus-6ef81.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:189317978219:android:2a9c73ba37a4d9de40b92e",
+        "android_client_info": {
+          "package_name": "com.example.zoomplus"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "189317978219-5osree3cko2208699a9t0c89b46ag2r9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCUk2uMP9g9CbQiB0JwB_Z2oSTrm18XwHs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "189317978219-5osree3cko2208699a9t0c89b46ag2r9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
