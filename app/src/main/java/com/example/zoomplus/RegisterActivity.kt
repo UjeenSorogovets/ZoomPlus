@@ -21,11 +21,12 @@ class RegisterActivity : AppCompatActivity() {
         Log.d("MyTagActivity", "Application started 2");
     }
     val TAG = "MyTagActivity"
-
+    
     fun registerFun(view: View) {
         val username = findViewById<TextView>(R.id.usernameText).text.toString()
         val email = findViewById<TextView>(R.id.emailText).text.toString()
         val password = findViewById<TextView>(R.id.passwordText).text.toString()
+
 
         Log.d("MyTagActivity", "toastMe")
         Log.d("MyTagActivity", "Email is$email")
