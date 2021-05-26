@@ -2,6 +2,9 @@ package com.example.zoomplus
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.BlendMode
+import android.graphics.BlendModeColorFilter
+import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -27,8 +30,6 @@ class RegisterActivity : AppCompatActivity() {
         val email = findViewById<TextView>(R.id.emailText).text.toString()
         val password = findViewById<TextView>(R.id.passwordText).text.toString()
 
-
-        
         Log.d("MyTagActivity", "toastMe")
         Log.d("MyTagActivity", "Email is$email")
         Log.d("MyTagActivity", "Password is$password")
@@ -89,15 +90,12 @@ class RegisterActivity : AppCompatActivity() {
         if (requestCode == 0 && resultCode == Activity.RESULT_OK && data != null)
         {
             Log.d(TAG, "photo was selected!")
-
             val uri = data.data
-
             val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, uri)
-
             val selectPhotoButton = findViewById<Button>(R.id.selectPhotoButton)
             val bitmapDrawable = BitmapDrawable(bitmap)
             selectPhotoButton.setBackgroundDrawable(bitmapDrawable)
-
+            selectPhotoButton.text=""
         }
     }
 
