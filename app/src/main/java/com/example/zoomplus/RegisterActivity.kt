@@ -1,11 +1,7 @@
 package com.example.zoomplus
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
-import android.graphics.BlendMode
-import android.graphics.BlendModeColorFilter
-import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -19,11 +15,8 @@ import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.IgnoreExtraProperties
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.ktx.storage
+import de.hdodenhof.circleimageview.CircleImageView
 import java.util.*
 
 private lateinit var database: DatabaseReference
@@ -32,19 +25,11 @@ val TAG = "MyTagActivity"
 class RegisterActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_register)
 
-        Log.d("MyTagActivity", "Application started 2")
-        //
-
-
-
+        //Log.d("MyTagActivity", "Application started 2")
     }
 
-
-    //
-
-    //
     fun registerFun(view: View) {
         val username = findViewById<TextView>(R.id.usernameText).text.toString()
         val email = findViewById<TextView>(R.id.emailText).text.toString()
@@ -91,8 +76,6 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
-
-
     fun alreadyRegisteredFun(view: View) {
         val email = findViewById<TextView>(R.id.emailText).text.toString()
         val username = findViewById<TextView>(R.id.usernameText).text.toString()
@@ -127,8 +110,14 @@ class RegisterActivity : AppCompatActivity() {
 
             val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, selectedPhotoUri)
             val bitmapDrawable = BitmapDrawable(bitmap)
-            selectPhotoButton.setBackgroundDrawable(bitmapDrawable)
-            selectPhotoButton.text=""
+
+            val selectPhotoCircleView = findViewById<CircleImageView>(R.id.selectPhotoCircleView)
+            selectPhotoCircleView.setImageBitmap(bitmap)
+
+            selectPhotoButton.alpha = 0f
+
+            //selectPhotoButton.setBackgroundDrawable(bitmapDrawable)
+            //selectPhotoButton.text=""
         }
     }
 
@@ -154,8 +143,6 @@ class RegisterActivity : AppCompatActivity() {
                 Log.d(TAG, "uploadImageToFirebaseStorage FAIL")
                 //
             }
-
-
     }
 
     private fun saveUserToFirebaseDatabase(profileImageUrl:String)
