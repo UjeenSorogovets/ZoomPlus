@@ -84,12 +84,11 @@
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:background="@drawable/rounded_select_photo_button"
-
-
         android:text="Select photo"
         android:onClick="selectPhotoFun"
         app:layout_constraintBottom_toTopOf="@+id/usernameText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

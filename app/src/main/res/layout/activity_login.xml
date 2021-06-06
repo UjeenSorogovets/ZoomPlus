@@ -21,7 +21,7 @@
         app:layout_constraintTop_toBottomOf="@+id/emailLoginText"
         android:padding="20dp"/>
 
-    <EditText
+    <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/emailLoginText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
