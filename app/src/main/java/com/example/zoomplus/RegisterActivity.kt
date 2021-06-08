@@ -31,9 +31,9 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     fun registerFun(view: View) {
-        val username = findViewById<TextView>(R.id.usernameText).text.toString()
-        val email = findViewById<TextView>(R.id.emailText).text.toString()
-        val password = findViewById<TextView>(R.id.passwordText).text.toString()
+        val username = findViewById<TextView>(R.id.username_edittext_register).text.toString()
+        val email = findViewById<TextView>(R.id.email_edittext_register).text.toString()
+        val password = findViewById<TextView>(R.id.password_edittext_register).text.toString()
 
         Log.d("MyTagActivity", "Email is$email")
         Log.d("MyTagActivity", "Password is$password")
@@ -75,9 +75,10 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     fun alreadyRegisteredFun(view: View) {
-        val email = findViewById<TextView>(R.id.emailText).text.toString()
-        val username = findViewById<TextView>(R.id.usernameText).text.toString()
-        val password = findViewById<TextView>(R.id.passwordText).text.toString()
+        val username = findViewById<TextView>(R.id.username_edittext_register).text.toString()
+        val email = findViewById<TextView>(R.id.email_edittext_register).text.toString()
+        val password = findViewById<TextView>(R.id.password_edittext_register).text.toString()
+
         Log.d("MyTagActivity", "testFun2")
         Log.d("MyTagActivity", "Email is$email")
         Log.d("MyTagActivity", "Password is$password")
@@ -104,12 +105,12 @@ class RegisterActivity : AppCompatActivity() {
             
             selectedPhotoUri = data.data
 
-            val selectPhotoButton = findViewById<Button>(R.id.selectPhotoButton)
+            val selectPhotoButton = findViewById<Button>(R.id.selectphoto_button_register)
 
             val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, selectedPhotoUri)
             val bitmapDrawable = BitmapDrawable(bitmap)
 
-            val selectPhotoCircleView = findViewById<CircleImageView>(R.id.selectPhotoCircleView)
+            val selectPhotoCircleView = findViewById<CircleImageView>(R.id.selectphoto_imageview_register)
             selectPhotoCircleView.setImageBitmap(bitmap)
 
             selectPhotoButton.alpha = 0f
@@ -146,7 +147,7 @@ class RegisterActivity : AppCompatActivity() {
         val uid = FirebaseAuth.getInstance().uid ?: ""
         val ref = FirebaseDatabase.getInstance().getReference("users/$uid")
 
-        val username = findViewById<TextView>(R.id.usernameText).text.toString()
+        val username = findViewById<TextView>(R.id.username_edittext_register).text.toString()
 
         val user = User(uid, username, profileImageUrl)
         Log.d(TAG, "We saved user to Firebase Database")
