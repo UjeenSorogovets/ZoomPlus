@@ -42,8 +42,6 @@ class RegisterActivity : AppCompatActivity() {
             FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
-
-
                         uploadImageToFirebaseStorage()
 
                         // Sign in success, update UI with the signed-in user's information
@@ -115,9 +113,6 @@ class RegisterActivity : AppCompatActivity() {
             selectPhotoCircleView.setImageBitmap(bitmap)
 
             selectPhotoButton.alpha = 0f
-
-            //selectPhotoButton.setBackgroundDrawable(bitmapDrawable)
-            //selectPhotoButton.text=""
         }
     }
 
@@ -151,7 +146,8 @@ class RegisterActivity : AppCompatActivity() {
         val uid = FirebaseAuth.getInstance().uid ?: ""
         val ref = FirebaseDatabase.getInstance().getReference("users/$uid")
 
-        val username = findViewById<TextView>(R.id.usernameText).toString()
+        val username = findViewById<TextView>(R.id.usernameText).text.toString()
+
         val user = User(uid, username, profileImageUrl)
         Log.d(TAG, "We saved user to Firebase Database")
         ref.setValue(user)

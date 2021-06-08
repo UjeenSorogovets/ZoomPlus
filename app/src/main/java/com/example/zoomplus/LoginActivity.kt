@@ -1,6 +1,5 @@
 package com.example.zoomplus
 
-import android.content.Intent
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.util.Log
@@ -20,14 +19,12 @@ class LoginActivity:AppCompatActivity() {
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
             .build()
-
-
     }
     val TAG = "MyTagActivity"
 
-    fun loginFun(view: View){
-        val email = findViewById<TextView>(R.id.emailLoginText).text.toString()
-        val password = findViewById<TextView>(R.id.passwordLoginText).text.toString()
+    fun performLogin(view: View){
+        val email = findViewById<TextView>(R.id.email_edittext_login).text.toString()
+        val password = findViewById<TextView>(R.id.password_edittext_login).text.toString()
         Log.d(TAG, "Login!")
         //FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
             //.addOnCompleteListener()
