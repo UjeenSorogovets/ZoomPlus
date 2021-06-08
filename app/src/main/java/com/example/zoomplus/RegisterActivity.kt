@@ -12,6 +12,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import com.example.zoomplus.messages.LatestMessagesActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -149,6 +150,16 @@ class RegisterActivity : AppCompatActivity() {
         val user = User(uid, username, profileImageUrl)
         Log.d(TAG, "We saved user to Firebase Database")
         ref.setValue(user)
+            .addOnSuccessListener {
+                Log.d(TAG, "We saved user to Firebase Database")
+
+                val intent = Intent(this, LatestMessagesActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(intent)
+            }
+            .addOnFailureListener {
+                Log.d(TAG, "We DON'T saved user to Firebase Database")
+            }
 
         Log.d(TAG, "saveUserToFirebaseDatabase END")
     }
