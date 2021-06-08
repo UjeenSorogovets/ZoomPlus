@@ -106,14 +106,11 @@ class RegisterActivity : AppCompatActivity() {
             selectedPhotoUri = data.data
 
             val selectPhotoButton = findViewById<Button>(R.id.selectphoto_button_register)
+            selectPhotoButton.alpha = 0f
 
             val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, selectedPhotoUri)
-            val bitmapDrawable = BitmapDrawable(bitmap)
-
             val selectPhotoCircleView = findViewById<CircleImageView>(R.id.selectphoto_imageview_register)
             selectPhotoCircleView.setImageBitmap(bitmap)
-
-            selectPhotoButton.alpha = 0f
         }
     }
 
@@ -156,5 +153,3 @@ class RegisterActivity : AppCompatActivity() {
         Log.d(TAG, "saveUserToFirebaseDatabase END")
     }
 }
-
-class User(val uid:String, val username:String, val profileImage:String)
