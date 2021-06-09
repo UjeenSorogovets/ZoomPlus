@@ -1,8 +1,11 @@
 package com.example.zoomplus.views
 
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.util.Log
+import android.view.View
+import androidx.core.app.ActivityCompat.startActivityForResult
 import com.bumptech.glide.Glide
 import com.example.zoomplus.R
 import com.example.zoomplus.User
@@ -14,7 +17,7 @@ import kotlinx.android.synthetic.main.chat_to_row.view.*
 import kotlinx.android.synthetic.main.user_row_new_message.view.*
 
 
-class ChatFromItem(val text: String, val user: User): Item<GroupieViewHolder>() {
+class ChatFromItem(val text: String, val user: User, val bitmap: Bitmap?): Item<GroupieViewHolder>() {
   override fun bind(viewHolder: GroupieViewHolder, position: Int) {
     viewHolder.itemView.textview_from_row.text = text
 
@@ -39,9 +42,21 @@ class ChatFromItem(val text: String, val user: User): Item<GroupieViewHolder>() 
     }
     else {
       val targetBitmap = viewHolder.itemView.imageview_from_row
-
       targetBitmap.alpha= 0F
     }
+
+  }
+
+  fun selectPhotoFun(view: View)
+  {
+    Log.d(com.example.zoomplus.registerlogin.TAG, "photo!")
+
+    val intent = Intent(Intent.ACTION_PICK)
+    intent.type = "image/*"
+    startActivityForResult(intent,0)
+  }
+
+  private fun startActivityForResult(intent: Intent, i: Int) {
 
   }
 
