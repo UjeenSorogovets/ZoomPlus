@@ -1,5 +1,6 @@
 package com.example.zoomplus.messages
 
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
@@ -15,7 +16,6 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
-import com.squareup.picasso.Picasso
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import com.xwray.groupie.Item
@@ -23,15 +23,12 @@ import kotlinx.android.synthetic.main.activity_new_message.*
 import kotlinx.android.synthetic.main.user_row_new_message.view.*
 import java.security.AccessController.getContext
 
-
 val TAG = "MyTagActivity"
-
 
 class NewMessageActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_message)
-
 
         supportActionBar?.title = "Select user"
 
@@ -56,9 +53,15 @@ class NewMessageActivity : AppCompatActivity() {
                     if (user != null) {
                         adapter.add(UserItem(user))
                     }
-
                 }
-                //val recyclerview_newmessage = findViewById<RecyclerView>(R.id.recyclerview_newmessage)
+
+                adapter.setOnItemClickListener { item, view ->
+                    val intent = Intent(view.context, ChatLogActivity::class.java)
+                    startActivity(intent)
+
+                    finish()
+                }
+
                 recyclerview_newmessage.adapter = adapter
             }
 
@@ -69,20 +72,11 @@ class NewMessageActivity : AppCompatActivity() {
     }
 }
 
-
-
 class UserItem(val user: User): Item<GroupieViewHolder>()
 {
     override fun bind(viewHolder: GroupieViewHolder, position: Int) {
 
         viewHolder.itemView.username_textview_new_message.text = user.username
-
-        val w: Int = 100
-        val h: Int = 100
-
-        val conf = Bitmap.Config.ARGB_8888 // see other conf types
-
-        val bmp = Bitmap.createBitmap(w, h, conf) // this creates a MUTABLE bitmap
 
         Glide.with(viewHolder.itemView)
             .load(user.profileImageUrl)
