@@ -25,7 +25,7 @@ class LatestMessagesActivity : AppCompatActivity() {
 
     companion object {
         var currentUser: User? = null
-        val TAG = "LatestMessages"
+        val TAG = "MyTagActivity"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,7 +37,6 @@ class LatestMessagesActivity : AppCompatActivity() {
 
         // set item click listener on your adapter
         adapter.setOnItemClickListener { item, view ->
-            Log.d(TAG, "123")
             val intent = Intent(this, ChatLogActivity::class.java)
 
             // we are missing the chat partner user

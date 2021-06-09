@@ -25,7 +25,7 @@ import kotlinx.android.synthetic.main.user_row_new_message.view.*
 class ChatLogActivity : AppCompatActivity() {
 
     companion object {
-        val TAG = "ChatLog"
+        val TAG = "MyTagActivity"
     }
 
     val adapter = GroupAdapter<GroupieViewHolder>()
