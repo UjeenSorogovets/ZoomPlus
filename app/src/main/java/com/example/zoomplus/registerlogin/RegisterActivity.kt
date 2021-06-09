@@ -1,4 +1,4 @@
-package com.example.zoomplus
+package com.example.zoomplus.registerlogin
 
 import android.app.Activity
 import android.content.Intent
@@ -12,6 +12,8 @@ import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import com.example.zoomplus.R
+import com.example.zoomplus.User
 import com.example.zoomplus.messages.LatestMessagesActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference

@@ -1,4 +1,4 @@
-package com.example.zoomplus
+package com.example.zoomplus.registerlogin
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.zoomplus.R
 import com.example.zoomplus.messages.LatestMessagesActivity
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth

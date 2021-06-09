@@ -3,9 +3,12 @@ package com.example.zoomplus.messages
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import com.bumptech.glide.Glide
 import com.example.zoomplus.R
 import com.example.zoomplus.User
 import com.example.zoomplus.models.ChatMessage
+import com.example.zoomplus.views.ChatFromItem
+import com.example.zoomplus.views.ChatToItem
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
@@ -17,18 +20,23 @@ import com.xwray.groupie.Item
 import kotlinx.android.synthetic.main.activity_chat_log.*
 import kotlinx.android.synthetic.main.chat_from_row.view.*
 import kotlinx.android.synthetic.main.chat_to_row.view.*
+import kotlinx.android.synthetic.main.user_row_new_message.view.*
 
-val adapter = GroupAdapter<GroupieViewHolder>()
+
 
 class ChatLogActivity : AppCompatActivity() {
+
+    val adapter = GroupAdapter<GroupieViewHolder>()
+    var toUser: User? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat_log)
 
         recyclerview_chat_log.adapter = adapter
 
-        val user = intent.getParcelableExtra<User>(NewMessageActivity.USER_KEY)
-        supportActionBar?.title = user?.username
+        toUser = intent.getParcelableExtra<User>(NewMessageActivity.USER_KEY)
+        supportActionBar?.title = toUser?.username
 
         //setupDummyData()
         listenForMessages()
@@ -48,9 +56,10 @@ class ChatLogActivity : AppCompatActivity() {
                 Log.d(TAG, chatMessage?.text!!)
 
                 if (chatMessage.fromId == FirebaseAuth.getInstance().uid) {
-                    adapter.add(ChatFromItem(chatMessage.text))
+                    val currentUser = LatestMessagesActivity.currentUser
+                    adapter.add(ChatFromItem(chatMessage.text, currentUser!!))
                 } else {
-                    adapter.add(ChatToItem(chatMessage.text))
+                    adapter.add(ChatToItem(chatMessage.text, toUser!!))
                 }
 
 
@@ -90,38 +99,6 @@ class ChatLogActivity : AppCompatActivity() {
             }
     }
 
-    private fun setupDummyData() {
-        //val adapter = GroupAdapter<GroupieViewHolder>()
-
-        adapter.add(ChatFromItem("From meeeessage"))
-        adapter.add(ChatToItem("To message"))
-        adapter.add(ChatFromItem("From meeeessage"))
-        adapter.add(ChatToItem("To message"))
-        adapter.add(ChatFromItem("From meeeessage"))
-        adapter.add(ChatToItem("To message"))
-        adapter.add(ChatFromItem("From meeeessage"))
-        adapter.add(ChatToItem("To message"))
-
-        recyclerview_chat_log.adapter = adapter
-    }
+    
 }
 
-class ChatFromItem(val text: String) : Item<GroupieViewHolder>() {
-    override fun bind(viewHolder: GroupieViewHolder, position: Int) {
-        viewHolder.itemView.textview_from_row.text = text
-    }
-
-    override fun getLayout(): Int {
-        return R.layout.chat_from_row
-    }
-}
-
-class ChatToItem(val text: String) : Item<GroupieViewHolder>() {
-    override fun bind(viewHolder: GroupieViewHolder, position: Int) {
-        viewHolder.itemView.textview_to_row.text = text
-    }
-
-    override fun getLayout(): Int {
-        return R.layout.chat_to_row
-    }
-}
