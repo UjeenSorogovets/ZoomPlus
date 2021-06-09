@@ -1,16 +1,20 @@
 package com.example.zoomplus.messages
 
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.zoomplus.R
 import com.example.zoomplus.User
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.Picasso
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
@@ -22,10 +26,12 @@ import java.security.AccessController.getContext
 
 val TAG = "MyTagActivity"
 
+
 class NewMessageActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_message)
+
 
         supportActionBar?.title = "Select user"
 
@@ -76,13 +82,11 @@ class UserItem(val user: User): Item<GroupieViewHolder>()
 
         val conf = Bitmap.Config.ARGB_8888 // see other conf types
 
-        //val bmp = Bitmap.createBitmap(w, h, conf) // this creates a MUTABLE bitmap
-        //viewHolder.itemView.imageview_new_message.setImageBitmap(bmp)
-        Picasso.get().load("https://www.gstatic.com/webp/gallery/4.sm.jpg")
-            .into(viewHolder.itemView.imageview_new_message)
-        /*Picasso.get().load(user.profileImageUrl)
-                     .into(viewHolder.itemView.imageview_new_message)*/
+        val bmp = Bitmap.createBitmap(w, h, conf) // this creates a MUTABLE bitmap
 
+        Glide.with(viewHolder.itemView)
+            .load(user.profileImageUrl)
+            .into(viewHolder.itemView.imageview_new_message)
 
     }
     override fun getLayout(): Int {
