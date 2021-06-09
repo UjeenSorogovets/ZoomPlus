@@ -106,14 +106,13 @@ class ChatLogActivity : AppCompatActivity() {
 
         if (fromId == null) return
 
-//    val reference = FirebaseDatabase.getInstance().getReference("/messages").push()
         val reference = FirebaseDatabase.getInstance().getReference("/user-messages/$fromId/$toId").push()
 
         val toReference = FirebaseDatabase.getInstance().getReference("/user-messages/$toId/$fromId").push()
 
         val chatMessage = toId?.let {
             ChatMessage(reference.key!!, text, fromId,
-                it, System.currentTimeMillis() / 1000)
+                it, System.currentTimeMillis() / 1000, null)
         }
 
         reference.setValue(chatMessage)

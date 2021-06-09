@@ -91,11 +91,4 @@ class UserItem(val user: User): Item<GroupieViewHolder>() {
     }
 }
 
-// this is super tedious
-
-//class CustomAdapter: RecyclerView.Adapter<ViewHolder> {
-//  override fun onBindViewHolder(p0:, p1: Int) {
-//    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-//  }
-//}
 
