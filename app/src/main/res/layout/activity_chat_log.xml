@@ -10,17 +10,14 @@
         android:id="@+id/edittext_chat_log"
         android:layout_width="0dp"
         android:layout_height="50dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@android:color/white"
         android:ems="10"
         android:hint="Enter Message"
-        android:background="@android:color/white"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/send_button_chat_log"
+        app:layout_constraintEnd_toStartOf="@+id/send_image_button_chat_log"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button

@@ -1,17 +1,17 @@
 package com.example.zoomplus.messages
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
-import com.bumptech.glide.Glide
+import androidx.appcompat.app.AppCompatActivity
 import com.example.zoomplus.R
 import com.example.zoomplus.User
 import com.example.zoomplus.models.ChatMessage
-import com.example.zoomplus.registerlogin.RegisterActivity
+import com.example.zoomplus.registerlogin.LoginActivity
 import com.example.zoomplus.views.ChatFromItem
 import com.example.zoomplus.views.ChatToItem
 import com.google.firebase.auth.FirebaseAuth
@@ -21,11 +21,11 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
-import com.xwray.groupie.Item
 import kotlinx.android.synthetic.main.activity_chat_log.*
 import kotlinx.android.synthetic.main.chat_from_row.view.*
 import kotlinx.android.synthetic.main.chat_to_row.view.*
 import kotlinx.android.synthetic.main.user_row_new_message.view.*
+import java.util.*
 
 class ChatLogActivity : AppCompatActivity() {
 
@@ -61,7 +61,7 @@ class ChatLogActivity : AppCompatActivity() {
         val toId = toUser?.uid
         val ref = FirebaseDatabase.getInstance().getReference("/user-messages/$fromId/$toId")
 
-        ref.addChildEventListener(object: ChildEventListener {
+        ref.addChildEventListener(object : ChildEventListener {
 
             override fun onChildAdded(p0: DataSnapshot, p1: String?) {
                 val chatMessage = p0.getValue(ChatMessage::class.java)
@@ -71,7 +71,7 @@ class ChatLogActivity : AppCompatActivity() {
 
                     if (chatMessage.fromId == FirebaseAuth.getInstance().uid) {
                         val currentUser = LatestMessagesActivity.currentUser ?: return
-                        adapter.add(ChatFromItem(chatMessage.text, currentUser,null))
+                        adapter.add(ChatFromItem(chatMessage.text, currentUser, null))
                     } else {
                         adapter.add(ChatToItem(chatMessage.text, toUser!!))
                     }
@@ -116,8 +116,10 @@ class ChatLogActivity : AppCompatActivity() {
         val toReference = FirebaseDatabase.getInstance().getReference("/user-messages/$toId/$fromId").push()
 
         val chatMessage = toId?.let {
-            ChatMessage(reference.key!!, text, fromId,
-                it, System.currentTimeMillis() / 1000, null)
+            ChatMessage(
+                reference.key!!, text, fromId,
+                it, System.currentTimeMillis() / 1000, null
+            )
         }
 
         reference.setValue(chatMessage)
@@ -140,8 +142,14 @@ class ChatLogActivity : AppCompatActivity() {
         when (item?.itemId) {
             R.id.menu_start_video -> {
                 Log.d(TAG, "menu_start_video")
+                val intent = Intent(this, VideoCallActivity::class.java)
+                startActivity(intent)
             }
-            R.id.menu_sign_out -> {
+            R.id.menu_change_color -> {
+                val rnd = Random()
+                val color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256))
+
+                recyclerview_chat_log.setBackgroundColor(color)
             }
         }
 

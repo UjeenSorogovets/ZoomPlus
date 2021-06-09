@@ -5,7 +5,6 @@ import android.graphics.Bitmap
 import android.graphics.Color
 import android.util.Log
 import android.view.View
-import androidx.core.app.ActivityCompat.startActivityForResult
 import com.bumptech.glide.Glide
 import com.example.zoomplus.R
 import com.example.zoomplus.User
@@ -15,6 +14,7 @@ import com.xwray.groupie.Item
 import kotlinx.android.synthetic.main.chat_from_row.view.*
 import kotlinx.android.synthetic.main.chat_to_row.view.*
 import kotlinx.android.synthetic.main.user_row_new_message.view.*
+import java.util.*
 
 
 class ChatFromItem(val text: String, val user: User, val bitmap: Bitmap?): Item<GroupieViewHolder>() {
@@ -35,7 +35,10 @@ class ChatFromItem(val text: String, val user: User, val bitmap: Bitmap?): Item<
       val h: Int = 100
       val conf = Bitmap.Config.ARGB_8888 // see other conf types
       val bmp = Bitmap.createBitmap(w, h, conf) // this creates a MUTABLE bitmap
-      bmp.eraseColor(Color.BLACK)
+      val rnd = Random()
+      val color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256))
+      //bmp.eraseColor(Color.BLACK)
+      bmp.eraseColor(color)
       val targetBitmap = viewHolder.itemView.imageview_from_row
       targetBitmap.setImageBitmap(bmp)
       targetBitmap.alpha= 1F
@@ -53,7 +56,7 @@ class ChatFromItem(val text: String, val user: User, val bitmap: Bitmap?): Item<
 
     val intent = Intent(Intent.ACTION_PICK)
     intent.type = "image/*"
-    startActivityForResult(intent,0)
+    startActivityForResult(intent, 0)
   }
 
   private fun startActivityForResult(intent: Intent, i: Int) {
