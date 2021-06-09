@@ -24,7 +24,12 @@ import kotlinx.android.synthetic.main.user_row_new_message.view.*
 
 class ChatLogActivity : AppCompatActivity() {
 
+    companion object {
+        val TAG = "ChatLog"
+    }
+
     val adapter = GroupAdapter<GroupieViewHolder>()
+
     var toUser: User? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -66,6 +71,8 @@ class ChatLogActivity : AppCompatActivity() {
                         adapter.add(ChatToItem(chatMessage.text, toUser!!))
                     }
                 }
+
+                recyclerview_chat_log.scrollToPosition(adapter.itemCount - 1)
 
             }
 
