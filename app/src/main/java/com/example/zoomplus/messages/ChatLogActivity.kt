@@ -1,12 +1,17 @@
 package com.example.zoomplus.messages
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
+import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.example.zoomplus.R
 import com.example.zoomplus.User
 import com.example.zoomplus.models.ChatMessage
+import com.example.zoomplus.registerlogin.RegisterActivity
 import com.example.zoomplus.views.ChatFromItem
 import com.example.zoomplus.views.ChatToItem
 import com.google.firebase.auth.FirebaseAuth
@@ -66,7 +71,7 @@ class ChatLogActivity : AppCompatActivity() {
 
                     if (chatMessage.fromId == FirebaseAuth.getInstance().uid) {
                         val currentUser = LatestMessagesActivity.currentUser ?: return
-                        adapter.add(ChatFromItem(chatMessage.text, currentUser))
+                        adapter.add(ChatFromItem(chatMessage.text, currentUser,null))
                     } else {
                         adapter.add(ChatToItem(chatMessage.text, toUser!!))
                     }
@@ -130,5 +135,23 @@ class ChatLogActivity : AppCompatActivity() {
         val latestMessageToRef = FirebaseDatabase.getInstance().getReference("/latest-messages/$toId/$fromId")
         latestMessageToRef.setValue(chatMessage)
     }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item?.itemId) {
+            R.id.menu_start_video -> {
+                Log.d(TAG, "menu_start_video")
+            }
+            R.id.menu_sign_out -> {
+            }
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.chat_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
 }
 

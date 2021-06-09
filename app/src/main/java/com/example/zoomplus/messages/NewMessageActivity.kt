@@ -80,8 +80,6 @@ class NewMessageActivity : AppCompatActivity() {
 class UserItem(val user: User): Item<GroupieViewHolder>() {
     override fun bind(viewHolder: GroupieViewHolder, position: Int) {
         viewHolder.itemView.username_textview_new_message.text = user.username
-
-
         Glide.with(viewHolder.itemView).load(user.profileImageUrl).into(viewHolder.itemView.imageview_new_message)
     }
 

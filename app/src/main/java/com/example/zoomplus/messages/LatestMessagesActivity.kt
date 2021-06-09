@@ -93,14 +93,6 @@ class LatestMessagesActivity : AppCompatActivity() {
 
     val adapter = GroupAdapter<GroupieViewHolder>()
 
-//  private fun setupDummyRows() {
-//
-//
-//    adapter.add(LatestMessageRow())
-//    adapter.add(LatestMessageRow())
-//    adapter.add(LatestMessageRow())
-//  }
-
     private fun fetchCurrentUser() {
         val uid = FirebaseAuth.getInstance().uid
         val ref = FirebaseDatabase.getInstance().getReference("/users/$uid")
