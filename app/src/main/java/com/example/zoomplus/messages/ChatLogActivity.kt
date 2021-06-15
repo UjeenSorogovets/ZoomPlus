@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.zoomplus.R
 import com.example.zoomplus.User
@@ -14,6 +15,7 @@ import com.example.zoomplus.models.ChatMessage
 import com.example.zoomplus.registerlogin.LoginActivity
 import com.example.zoomplus.views.ChatFromItem
 import com.example.zoomplus.views.ChatToItem
+import com.example.zoomplus.views.LatestMessageRow
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
@@ -53,8 +55,39 @@ class ChatLogActivity : AppCompatActivity() {
 
         send_button_chat_log.setOnClickListener {
             Log.d(TAG, "Attempt to send message....")
-            performSendMessage()
+            performSendMessage(null)
         }
+        //
+        // set item click listener on your adapter
+        adapter.setOnItemClickListener { item, view ->
+            //val message = item as ChatMessage
+            val xa = item
+            when (item) {
+                is ChatFromItem -> {
+                    performSendMessage("Replying to my message:")
+                    performSendMessage(item.text)
+                }
+                is ChatToItem -> {
+                    performSendMessage("Replying to your message:")
+                    performSendMessage(item.text)
+                }
+
+
+            }
+
+            /*Toast.makeText(
+                baseContext, message.text,
+                Toast.LENGTH_SHORT
+            ).show()*/
+            /*val intent = Intent(this, ChatLogActivity::class.java)
+
+            // we are missing the chat partner user
+
+            val row = item as LatestMessageRow
+            intent.putExtra(NewMessageActivity.USER_KEY, row.chatPartnerUser)
+            startActivity(intent)*/
+        }
+        //
     }
 
     private fun listenForMessages() {
@@ -102,9 +135,12 @@ class ChatLogActivity : AppCompatActivity() {
 
     }
 
-    private fun performSendMessage() {
+    private fun performSendMessage(newText: String?) {
         // how do we actually send a message to firebase...
-        val text = edittext_chat_log.text.toString()
+        //var text:String
+
+        val text = newText ?: edittext_chat_log.text.toString()
+
 
         val fromId = FirebaseAuth.getInstance().uid
         val user = intent.getParcelableExtra<User>(NewMessageActivity.USER_KEY)
@@ -112,9 +148,11 @@ class ChatLogActivity : AppCompatActivity() {
 
         if (fromId == null) return
 
-        val reference = FirebaseDatabase.getInstance().getReference("/user-messages/$fromId/$toId").push()
+        val reference =
+            FirebaseDatabase.getInstance().getReference("/user-messages/$fromId/$toId").push()
 
-        val toReference = FirebaseDatabase.getInstance().getReference("/user-messages/$toId/$fromId").push()
+        val toReference =
+            FirebaseDatabase.getInstance().getReference("/user-messages/$toId/$fromId").push()
 
         val chatMessage = toId?.let {
             ChatMessage(
@@ -132,10 +170,12 @@ class ChatLogActivity : AppCompatActivity() {
 
         toReference.setValue(chatMessage)
 
-        val latestMessageRef = FirebaseDatabase.getInstance().getReference("/latest-messages/$fromId/$toId")
+        val latestMessageRef =
+            FirebaseDatabase.getInstance().getReference("/latest-messages/$fromId/$toId")
         latestMessageRef.setValue(chatMessage)
 
-        val latestMessageToRef = FirebaseDatabase.getInstance().getReference("/latest-messages/$toId/$fromId")
+        val latestMessageToRef =
+            FirebaseDatabase.getInstance().getReference("/latest-messages/$toId/$fromId")
         latestMessageToRef.setValue(chatMessage)
     }
 
