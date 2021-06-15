@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.latest_message_row.view.*
 import kotlinx.android.synthetic.main.user_row_new_message.view.*
 
 
-class LatestMessageRow(val chatMessage: ChatMessage): Item<GroupieViewHolder>() {
+class LatestMessageRow(val chatMessage: ChatMessage, val addFontSize: Boolean?): Item<GroupieViewHolder>() {
     var chatPartnerUser: User? = null
 
     override fun bind(viewHolder: GroupieViewHolder, position: Int) {
@@ -29,11 +29,27 @@ class LatestMessageRow(val chatMessage: ChatMessage): Item<GroupieViewHolder>() 
             chatPartnerId = chatMessage.fromId
         }
 
+        val currentTextSize = viewHolder.itemView.username_textview_latest_message.textSize
+        if (addFontSize!=null)
+        {
+            if (addFontSize==true)
+            {
+                viewHolder.itemView.username_textview_latest_message.textSize=25f
+                viewHolder.itemView.message_textview_latest_message.textSize=20f
+            }
+            else if (addFontSize==false)
+            {
+                viewHolder.itemView.username_textview_latest_message.textSize=20f
+                viewHolder.itemView.message_textview_latest_message.textSize=15f
+            }
+        }
+
         val ref = FirebaseDatabase.getInstance().getReference("/users/$chatPartnerId")
         ref.addListenerForSingleValueEvent(object: ValueEventListener {
             override fun onDataChange(p0: DataSnapshot) {
                 chatPartnerUser = p0.getValue(User::class.java)
                 viewHolder.itemView.username_textview_latest_message.text = chatPartnerUser?.username
+
 
                 val targetImageView = viewHolder.itemView.imageview_latest_message
 

@@ -60,10 +60,10 @@ class LatestMessagesActivity : AppCompatActivity() {
 
     val latestMessagesMap = HashMap<String, ChatMessage>()
 
-    private fun refreshRecyclerViewMessages() {
+    private fun refreshRecyclerViewMessages(addFontSize: Boolean?) {
         adapter.clear()
         latestMessagesMap.values.forEach {
-            adapter.add(LatestMessageRow(it))
+            adapter.add(LatestMessageRow(it, addFontSize))
         }
     }
 
@@ -74,13 +74,13 @@ class LatestMessagesActivity : AppCompatActivity() {
             override fun onChildAdded(p0: DataSnapshot, p1: String?) {
                 val chatMessage = p0.getValue(ChatMessage::class.java) ?: return
                 latestMessagesMap[p0.key!!] = chatMessage
-                refreshRecyclerViewMessages()
+                refreshRecyclerViewMessages(null)
             }
 
             override fun onChildChanged(p0: DataSnapshot, p1: String?) {
                 val chatMessage = p0.getValue(ChatMessage::class.java) ?: return
                 latestMessagesMap[p0.key!!] = chatMessage
-                refreshRecyclerViewMessages()
+                refreshRecyclerViewMessages(null)
             }
 
             override fun onChildMoved(p0: DataSnapshot, p1: String?) {
@@ -134,6 +134,13 @@ class LatestMessagesActivity : AppCompatActivity() {
                 val intent = Intent(this, RegisterActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
                 startActivity(intent)
+            }
+            R.id.menu_plus_font_size -> {
+
+                refreshRecyclerViewMessages(true)
+            }
+            R.id.menu_minus_font_size -> {
+                refreshRecyclerViewMessages(false)
             }
         }
 
